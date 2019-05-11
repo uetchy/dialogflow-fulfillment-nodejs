@@ -102,7 +102,7 @@ class V1Agent {
      * https://dialogflow.com/docs/reference/agent/query#query_parameters_and_json_fields
      * @type {string}
      */
-    let originalRequest = this.agent.request_.body.originalRequest;
+    const originalRequest = this.agent.request_.body.originalRequest;
     if (originalRequest) {
       const v1RequestSource = originalRequest.source || originalRequest.data.source;
       this.agent.requestSource = V1_TO_V2_PLATFORM_NAME[v1RequestSource] || v1RequestSource;
@@ -115,7 +115,7 @@ class V1Agent {
      * https://dialogflow.com/docs/reference/agent/query#query_parameters_and_json_fields
      * @type {object}
      */
-    let originalRequestPayloadRenameRename = Object.assign({}, originalRequest);
+    const originalRequestPayloadRenameRename = Object.assign({}, originalRequest);
     if (originalRequest && originalRequest.data) {
       // Rename 'data' attr to 'payload' to be consistent with v2
       const data = Object.getOwnPropertyDescriptor(originalRequestPayloadRenameRename, 'data');
@@ -185,7 +185,7 @@ class V1Agent {
    * @private
    */
   addMessagesResponse_(requestSource) {
-    let messages = this.buildResponseMessages_(requestSource);
+    const messages = this.buildResponseMessages_(requestSource);
     if (messages.length > 0) {
       this.addJson_({messages: messages});
     }
@@ -239,7 +239,7 @@ class V1Agent {
   buildResponseMessages_(requestSource) {
     // Get all the messages and filter out null/undefined objects
     const responseMessages = this.agent.responseMessages_.map((message) => message.getV1ResponseObject_(requestSource)).
-      filter((arr) => arr);
+        filter((arr) => arr);
     return responseMessages;
   }
 
@@ -261,7 +261,7 @@ class V1Agent {
    * @private
    */
   setFollowupEvent_(event) {
-    let eventJson = {
+    const eventJson = {
       name: event.name,
     };
     if (event.parameters) {
@@ -292,8 +292,8 @@ class V1Agent {
     }
 
     this.agent.add(new PayloadResponse(
-      PLATFORMS.ACTIONS_ON_GOOGLE,
-      response.data.google)
+        PLATFORMS.ACTIONS_ON_GOOGLE,
+        response.data.google)
     );
   }
 
@@ -324,9 +324,9 @@ class V1Agent {
     consoleMessageList.forEach((consoleMessageJson) => {
       if (richResponseMapping[consoleMessageJson.type]) {
         // convert the JSON to fufillment classes
-        let richResponse = richResponseMapping[consoleMessageJson.type](
-          consoleMessageJson,
-          V1_TO_V2_PLATFORM_NAME[consoleMessageJson.platform]
+        const richResponse = richResponseMapping[consoleMessageJson.type](
+            consoleMessageJson,
+            V1_TO_V2_PLATFORM_NAME[consoleMessageJson.platform]
         );
         richResponse ? richConsoleMessages = richConsoleMessages.concat(richResponse) : null;
       } else {
@@ -381,7 +381,7 @@ class V1Agent {
    */
   convertQuickRepliesJson_(messageJson, platform) {
     if (!messageJson.suggestions) return null;
-    let suggestions = [];
+    const suggestions = [];
     messageJson.suggestions.forEach((consoleMessageJson, iterator) => {
       suggestions.push(new Suggestion({
         title: messageJson.replies[iterator],
@@ -466,7 +466,7 @@ class V1Agent {
    */
   convertSuggestionsJson_(messageJson, platform) {
     if (!messageJson.suggestions) return null;
-    let suggestions = [];
+    const suggestions = [];
     messageJson.suggestions.forEach((consoleMessageJson, iterator) => {
       suggestions.push(new Suggestion({
         title: messageJson.suggestions[iterator].title,

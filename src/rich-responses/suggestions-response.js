@@ -51,7 +51,7 @@ class Suggestion extends RichResponse {
       (typeof suggestion === 'object' && !suggestion.title)
     ) {
       throw new Error(
-        'Reply string required by Suggestion constructor'
+          'Reply string required by Suggestion constructor'
       );
     }
     if (typeof suggestion === 'string') {
@@ -87,9 +87,9 @@ class Suggestion extends RichResponse {
     }
     if (this.replies.length !== 1) {
       throw new Error(
-        `Expected one reply in Suggestion object but found ${
-          this.replies.length
-        }`
+          `Expected one reply in Suggestion object but found ${
+            this.replies.length
+          }`
       );
     } else {
       this.replies[0] = reply;

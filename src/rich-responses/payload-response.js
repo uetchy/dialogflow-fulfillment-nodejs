@@ -109,7 +109,7 @@ class Payload extends RichResponse {
       return this.payload;
     }
 
-    let response = {};
+    const response = {};
     if (platform === PLATFORMS.ACTIONS_ON_GOOGLE) {
       response['google'] = this.payload;
     } else {
@@ -130,7 +130,7 @@ class Payload extends RichResponse {
       return null;
     }
 
-    let platform = V2_TO_V1_PLATFORM_NAME[this.platform] || this.platform;
+    const platform = V2_TO_V1_PLATFORM_NAME[this.platform] || this.platform;
     return {
       type: platform === 'google' ? 'custom_payload' : 4,
       platform: platform,

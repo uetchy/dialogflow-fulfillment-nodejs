@@ -153,7 +153,7 @@ class Card extends RichResponse {
   setButton(button) {
     if ((!button.text && button.url) || (!button.url && button.text)) {
       throw new Error(
-        `card button requires button title and url. \
+          `card button requires button title and url. \
 \nUsage: setButton({text: \'button text\', url: \'http://yoururlhere.com\'}`
       );
     }

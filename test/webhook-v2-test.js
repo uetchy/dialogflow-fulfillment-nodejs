@@ -31,74 +31,74 @@ const linkUrl = 'https://assistant.google.com/';
 
 test('Test v2 Google Assistant responses', async (t) => {
   // Google Assistant Request: text and card response
-  let googleRequest = {body: mockGoogleV2Request};
+  const googleRequest = {body: mockGoogleV2Request};
   webhookTest(googleRequest, textAndCard, (responseJson) => {
     t.deepEqual(responseJson, responseGoogleV2TextAndCard);
   });
 
   // Google Assistant Request: text response
   webhookTest(
-    googleRequest,
-    (agent) => {
-      agent.add('text response');
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseGoogleV2Text);
-    },
+      googleRequest,
+      (agent) => {
+        agent.add('text response');
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseGoogleV2Text);
+      },
   );
 
   // Google Assistant Request: card response
   webhookTest(
-    googleRequest,
-    addCard,
-    (responseJson) => {
-      t.deepEqual(responseJson, responseGoogleV2Card);
-    },
+      googleRequest,
+      addCard,
+      (responseJson) => {
+        t.deepEqual(responseJson, responseGoogleV2Card);
+      },
   );
 
   // Image response
   webhookTest(
-    googleRequest,
-    (agent) => {
-      agent.add(new Image(imageUrl));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseGoogleV2Image);
-    },
+      googleRequest,
+      (agent) => {
+        agent.add(new Image(imageUrl));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseGoogleV2Image);
+      },
   );
 
   // Suggestion
   webhookTest(
-    googleRequest,
-    (agent) => {
-      agent.add(new Suggestion('sample reply'));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseGoogleV2Suggestion);
-    },
+      googleRequest,
+      (agent) => {
+        agent.add(new Suggestion('sample reply'));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseGoogleV2Suggestion);
+      },
   );
 
   // Payload
   webhookTest(
-    googleRequest,
-    (agent) => {
-      agent.add(new Payload(agent.ACTIONS_ON_GOOGLE, googlePayload));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseGoogleV2Payload);
-    },
+      googleRequest,
+      (agent) => {
+        agent.add(new Payload(agent.ACTIONS_ON_GOOGLE, googlePayload));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseGoogleV2Payload);
+      },
   );
 });
 
 test('Test v2 Slack responses', async (t) => {
   // CardResponse
-  let slackRequest = {body: mockSlackV2Request};
+  const slackRequest = {body: mockSlackV2Request};
   webhookTest(
-    slackRequest,
-    addCard,
-    (responseJson) => {
-      t.deepEqual(responseJson, responseSlackV2Card);
-    },
+      slackRequest,
+      addCard,
+      (responseJson) => {
+        t.deepEqual(responseJson, responseSlackV2Card);
+      },
   );
 
   // TextResponse and CardResponse
@@ -108,116 +108,116 @@ test('Test v2 Slack responses', async (t) => {
 
   // TextReponse
   webhookTest(slackRequest,
-    (agent) => {
-      agent.add('text response');
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseSlackV2Text);
-    });
+      (agent) => {
+        agent.add('text response');
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseSlackV2Text);
+      });
 
   // ImageResponse
   webhookTest(
-    slackRequest,
-    (agent) => {
-      agent.add(new Image(imageUrl));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseSlackV2Image);
-    },
+      slackRequest,
+      (agent) => {
+        agent.add(new Image(imageUrl));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseSlackV2Image);
+      },
   );
 
   // SuggestionsReponse
   webhookTest(
-    slackRequest,
-    (agent) => {
-      agent.add(new Suggestion('sample reply'));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseSlackV2Suggestions);
-    },
+      slackRequest,
+      (agent) => {
+        agent.add(new Suggestion('sample reply'));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseSlackV2Suggestions);
+      },
   );
 
   // PayloadReponse
   webhookTest(
-    slackRequest,
-    (agent) => {
-      agent.add(new Payload(agent.SLACK, slackPayload));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseSlackV2Payload);
-    },
+      slackRequest,
+      (agent) => {
+        agent.add(new Payload(agent.SLACK, slackPayload));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseSlackV2Payload);
+      },
   );
 });
 
 test('Test v2 Facebook responses', async (t) => {
   // CardReponse
-  let facebookRequest = {body: mockFacebookV2Request};
+  const facebookRequest = {body: mockFacebookV2Request};
   webhookTest(
-    facebookRequest,
-    addCard,
-    (responseJson) => {
-      t.deepEqual(responseJson, responseFacebookV2Card);
-    },
+      facebookRequest,
+      addCard,
+      (responseJson) => {
+        t.deepEqual(responseJson, responseFacebookV2Card);
+      },
   );
 
   // TextResponse and CardResponse
   webhookTest(
-    facebookRequest,
-    textAndCard,
-    (responseJson) => {
-      t.deepEqual(responseJson, responseFacebookV2TextAndCard);
-    },
+      facebookRequest,
+      textAndCard,
+      (responseJson) => {
+        t.deepEqual(responseJson, responseFacebookV2TextAndCard);
+      },
   );
 
   // TextResponse
   webhookTest(
-    facebookRequest,
-    (agent) => {
-      agent.add('text response');
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseFacebookV2Text);
-    },
+      facebookRequest,
+      (agent) => {
+        agent.add('text response');
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseFacebookV2Text);
+      },
   );
 
   // ImageResponse
   webhookTest(
-    facebookRequest,
-    (agent) => {
-      agent.add(new Image(imageUrl));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseFacebookV2Image);
-    },
+      facebookRequest,
+      (agent) => {
+        agent.add(new Image(imageUrl));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseFacebookV2Image);
+      },
   );
 
   // QuickRepliesReponse
   webhookTest(
-    facebookRequest,
-    (agent) => {
-      agent.add(new Suggestion('sample reply'));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseFacebookV2Suggestion);
-    },
+      facebookRequest,
+      (agent) => {
+        agent.add(new Suggestion('sample reply'));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseFacebookV2Suggestion);
+      },
   );
 
   // PayloadReponse
   webhookTest(
-    facebookRequest,
-    (agent) => {
-      agent.add(new Payload(agent.FACEBOOK, facebookPayload));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseFacebookV2Payload);
-    },
+      facebookRequest,
+      (agent) => {
+        agent.add(new Payload(agent.FACEBOOK, facebookPayload));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseFacebookV2Payload);
+      },
   );
 });
 
 test('Test v2 Twitter requestSource', async (t) => {
-  let twitterRequest = {body: mockTwitterV2Request};
-  let response = new ResponseMock();
-  let agent = new WebhookClient({
+  const twitterRequest = {body: mockTwitterV2Request};
+  const response = new ResponseMock();
+  const agent = new WebhookClient({
     request: twitterRequest,
     response: response,
   });
@@ -227,31 +227,31 @@ test('Test v2 Twitter requestSource', async (t) => {
 
 test('Test v2 Twitter response', async (t) => {
   // Twitter request
-  let twitterRequest = {body: mockTwitterV2Request};
+  const twitterRequest = {body: mockTwitterV2Request};
   const textResponse = 'twitter text response';
 
   webhookTest(
-    twitterRequest,
-    (agent) => {
-      agent.add(textResponse);
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, {fulfillmentText: textResponse, outputContexts: []});
-    },
+      twitterRequest,
+      (agent) => {
+        agent.add(textResponse);
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, {fulfillmentText: textResponse, outputContexts: []});
+      },
   );
 });
 
 test('Test v2 Twitter payload response', async (t) => {
-  let twitterRequest = {body: mockTwitterV2Request};
+  const twitterRequest = {body: mockTwitterV2Request};
 
   webhookTest(
-    twitterRequest,
-    (agent) => {
-      agent.add(new Payload('twitter', {test: 'payload'}));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, {payload: {twitter: {test: 'payload'}}, outputContexts: []});
-    },
+      twitterRequest,
+      (agent) => {
+        agent.add(new Payload('twitter', {test: 'payload'}));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, {payload: {twitter: {test: 'payload'}}, outputContexts: []});
+      },
   );
 });
 
@@ -265,33 +265,33 @@ test('Test v2 contexts', async (t) => {
     parameters: {city: 'Rome'},
   };
 
-  let googleResponse = new ResponseMock();
-  let googleRequest = {body: v2Request};
-  let agent = new WebhookClient({
+  const googleResponse = new ResponseMock();
+  const googleRequest = {body: v2Request};
+  const agent = new WebhookClient({
     request: googleRequest,
     response: googleResponse,
   });
   // setContext
   agent.setContext(sampleContextName);
   t.deepEqual(
-    {name: sampleContextName},
-    agent.context.get(sampleContextName),
+      {name: sampleContextName},
+      agent.context.get(sampleContextName),
   );
   agent.setContext(secondContextName);
   t.deepEqual(
-    {name: secondContextName},
-    agent.context.get(secondContextName),
+      {name: secondContextName},
+      agent.context.get(secondContextName),
   );
   agent.setContext(complexContext);
   t.deepEqual(
-    {name: complexContext.name, lifespan: 2, parameters: {city: 'Rome'}},
-    agent.context.get(complexContext.name),
+      {name: complexContext.name, lifespan: 2, parameters: {city: 'Rome'}},
+      agent.context.get(complexContext.name),
   );
   // clearContext
   agent.clearContext(sampleContextName);
   t.deepEqual(
-    undefined,
-    agent.context.get(sampleContextName),
+      undefined,
+      agent.context.get(sampleContextName),
   );
   // clearAllContext
   agent.clearOutgoingContexts();
@@ -300,45 +300,45 @@ test('Test v2 contexts', async (t) => {
 
 test('Test converstion of v2 contexts to v1 contexts', async (t) => {
   const v2Request = mockSlackV2Request;
-  let slackResponse = new ResponseMock();
-  let slackRequest = {body: v2Request};
-  let agent = new WebhookClient({
+  const slackResponse = new ResponseMock();
+  const slackRequest = {body: v2Request};
+  const agent = new WebhookClient({
     request: slackRequest,
     response: slackResponse,
   });
 
   t.deepEqual([
-      {
-        name: 'generic',
-        lifespan: 4,
-        parameters: {
-          slack_user_id: 'U2URF86K1',
-          slack_channel: 'D3XQ6AF9A',
-        },
-      }],
-    agent.contexts,
-  );
-});
-
-test('Test v2 getContext', async (t) => {
-  const v2Request = mockSlackV2Request;
-  let slackResponse = new ResponseMock();
-  let slackRequest = {body: v2Request};
-  let agent = new WebhookClient({
-    request: slackRequest,
-    response: slackResponse,
-  });
-
-  let context = agent.getContext('generic');
-  t.deepEqual({
+    {
       name: 'generic',
       lifespan: 4,
       parameters: {
         slack_user_id: 'U2URF86K1',
         slack_channel: 'D3XQ6AF9A',
       },
+    }],
+  agent.contexts,
+  );
+});
+
+test('Test v2 getContext', async (t) => {
+  const v2Request = mockSlackV2Request;
+  const slackResponse = new ResponseMock();
+  const slackRequest = {body: v2Request};
+  const agent = new WebhookClient({
+    request: slackRequest,
+    response: slackResponse,
+  });
+
+  let context = agent.getContext('generic');
+  t.deepEqual({
+    name: 'generic',
+    lifespan: 4,
+    parameters: {
+      slack_user_id: 'U2URF86K1',
+      slack_channel: 'D3XQ6AF9A',
     },
-    context,
+  },
+  context,
   );
 
   context = agent.getContext('nonsense');
@@ -354,10 +354,10 @@ test('Test v2 followup events', async (t) => {
     languageCode: 'en',
   };
 
-  let googleResponse = new ResponseMock();
-  let googleRequest = {body: mockGoogleV2Request};
+  const googleResponse = new ResponseMock();
+  const googleRequest = {body: mockGoogleV2Request};
   const requestLangCode = mockGoogleV2Request.queryResult.languageCode;
-  let agent = new WebhookClient({
+  const agent = new WebhookClient({
     request: googleRequest,
     response: googleResponse,
   });
@@ -372,7 +372,7 @@ test('Test v2 followup events', async (t) => {
 
 test('Test v2 followupEvent only response', async (t) => {
   // Request with Knowledge connector response
-  let request = {body: mockV2KnowledgeConnector};
+  const request = {body: mockV2KnowledgeConnector};
   const complexEvent = {
     name: 'weather',
     parameters: {city: 'Rome'},
@@ -380,33 +380,33 @@ test('Test v2 followupEvent only response', async (t) => {
   };
 
   webhookTest(
-    request,
-    (agent) => {
-      agent.setFollowupEvent(complexEvent);
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson.followupEventInput, complexEvent);
-    },
+      request,
+      (agent) => {
+        agent.setFollowupEvent(complexEvent);
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson.followupEventInput, complexEvent);
+      },
   );
 });
 
 test('Test v2 consoleMessages', async (t) => {
-  let request = {body: mockV2ResponseWithMessage};
+  const request = {body: mockV2ResponseWithMessage};
 
   webhookTest(
-    request,
-    (agent) => {
-      agent.add(agent.consoleMessages);
-      agent.add('Text message 1 added from the fulfillment');
-    },
-    (responseJson) => {
-      t.is(responseJson.fulfillmentMessages.length, 2);
-      t.is(responseJson.fulfillmentMessages[0].text.text[0], 'text response');
-    },
+      request,
+      (agent) => {
+        agent.add(agent.consoleMessages);
+        agent.add('Text message 1 added from the fulfillment');
+      },
+      (responseJson) => {
+        t.is(responseJson.fulfillmentMessages.length, 2);
+        t.is(responseJson.fulfillmentMessages[0].text.text[0], 'text response');
+      },
   );
 
-  let response = new ResponseMock();
-  let agent = new WebhookClient({
+  const response = new ResponseMock();
+  const agent = new WebhookClient({
     request: {body: mockV2MulipleConsoleMessages},
     response: response,
   });
@@ -431,13 +431,13 @@ test('Test v2 consoleMessages', async (t) => {
   const facebookImage = consoleMessages[3];
   t.true(facebookImage instanceof Image);
   t.is(facebookImage.imageUrl,
-    'https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png',
+      'https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png',
   );
   // Facebook payload
   const facebookPayload = consoleMessages[4];
   t.true(facebookPayload instanceof Payload);
   t.deepEqual(facebookPayload.payload,
-    {'key': 'Facebook Messenger Payload'},
+      {'key': 'Facebook Messenger Payload'},
   );
   // Actions on Google text
   const actionsOnGoogleText = consoleMessages[5];
@@ -465,73 +465,73 @@ test('Test v2 consoleMessages', async (t) => {
   const actionsOnGooglePayload = consoleMessages[10];
   t.true(actionsOnGooglePayload instanceof Payload);
   t.deepEqual(actionsOnGooglePayload.payload,
-    {'google': 'payload'},
+      {'google': 'payload'},
   );
 });
 
 test('Test v2 original request', async (t) => {
-  let response = new ResponseMock();
+  const response = new ResponseMock();
 
-  let googleRequest = {body: mockGoogleV2Request};
+  const googleRequest = {body: mockGoogleV2Request};
   let agent = new WebhookClient({
     request: googleRequest,
     response: response,
   });
 
   t.deepEqual(mockGoogleV2Request.originalDetectIntentRequest,
-    agent.originalRequest,
+      agent.originalRequest,
   );
 
-  let facebookRequest = {body: mockFacebookV2Request};
+  const facebookRequest = {body: mockFacebookV2Request};
   agent = new WebhookClient({
     request: facebookRequest,
     response: response,
   });
 
   t.deepEqual(mockFacebookV2Request.originalDetectIntentRequest,
-    agent.originalRequest,
+      agent.originalRequest,
   );
 });
 
 test('Test v2 no handler defined', async (t) => {
-  let response = new ResponseMock();
-  let agent = new WebhookClient({
+  const response = new ResponseMock();
+  const agent = new WebhookClient({
     request: {body: mockGoogleV2Request},
     response: response,
   });
 
   const noHandlerDefinedError = await t.throws(agent.handleRequest(new Map()));
   t.is(
-    noHandlerDefinedError.message,
-    'No handler for requested intent',
+      noHandlerDefinedError.message,
+      'No handler for requested intent',
   );
 });
 
 test('Test v2 alternative query results', async (t) => {
   // Request with Knowledge connector response
-  let request = {body: mockV2KnowledgeConnector};
-  let agent = new WebhookClient({
+  const request = {body: mockV2KnowledgeConnector};
+  const agent = new WebhookClient({
     request: request,
     response: new ResponseMock(),
   });
 
   t.deepEqual(mockV2KnowledgeConnector.alternativeQueryResults,
-    agent.alternativeQueryResults,
+      agent.alternativeQueryResults,
   );
 });
 
 test('Test v2 end conversation', async (t) => {
   // Request with Knowledge connector response
-  let request = {body: mockV2KnowledgeConnector};
+  const request = {body: mockV2KnowledgeConnector};
 
   webhookTest(
-    request,
-    (agent) => {
-      agent.end('thanks for talking to me!');
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson.triggerEndOfConversation, true);
-    },
+      request,
+      (agent) => {
+        agent.end('thanks for talking to me!');
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson.triggerEndOfConversation, true);
+      },
   );
 });
 
@@ -590,8 +590,8 @@ class ResponseMock {
  * @param {function} callback for after response is complied
  */
 function webhookTest(request, handler, callback) {
-  let response = new ResponseMock(callback);
-  let agent = new WebhookClient({
+  const response = new ResponseMock(callback);
+  const agent = new WebhookClient({
     request: request,
     response: response,
   });
@@ -605,12 +605,12 @@ function webhookTest(request, handler, callback) {
 function textAndCard(agent) {
   agent.add('text response');
   agent.add(new Card({
-      title: 'card title',
-      text: 'card text',
-      imageUrl: imageUrl,
-      buttonText: 'button text',
-      buttonUrl: linkUrl,
-    }),
+    title: 'card title',
+    text: 'card text',
+    imageUrl: imageUrl,
+    buttonText: 'button text',
+    buttonUrl: linkUrl,
+  }),
   );
 };
 
@@ -620,12 +620,12 @@ function textAndCard(agent) {
  */
 function addCard(agent) {
   agent.add(new Card({
-      title: 'card title',
-      text: 'card text',
-      imageUrl: imageUrl,
-      buttonText: 'button text',
-      buttonUrl: linkUrl,
-    }),
+    title: 'card title',
+    text: 'card text',
+    imageUrl: imageUrl,
+    buttonText: 'button text',
+    buttonUrl: linkUrl,
+  }),
   );
 }
 

@@ -213,7 +213,7 @@ class WebhookClient {
      *
      * @type {string}
      */
-    for (let platform in PLATFORMS) {
+    for (const platform in PLATFORMS) {
       if (platform) {
         this[platform] = PLATFORMS[platform];
       }
@@ -225,7 +225,7 @@ class WebhookClient {
       this.client = new V1Agent(this);
     } else {
       throw new Error(
-        'Invalid or unknown request type (not a Dialogflow v1 or v2 webhook request).'
+          'Invalid or unknown request type (not a Dialogflow v1 or v2 webhook request).'
       );
     }
     debug(`Webhook request version ${this.agentVersion}`);
@@ -294,36 +294,36 @@ class WebhookClient {
    */
   handleRequest(handler) {
     if (typeof handler === 'function') {
-      let result = handler(this);
-      let promise = Promise.resolve(result);
+      const result = handler(this);
+      const promise = Promise.resolve(result);
       return promise.then(() => this.send_());
     }
 
     if (!(handler instanceof Map)) {
       error('handleRequest argument must be a function or map of intent names to functions');
       this.response_
-        .status(RESPONSE_CODE_BAD_REQUEST)
-        .status('handleRequest argument must be a function or map of intent names to functions');
+          .status(RESPONSE_CODE_BAD_REQUEST)
+          .status('handleRequest argument must be a function or map of intent names to functions');
       return Promise.reject( new Error(
-        'handleRequest argument must be a function or map of intent names to functions'
+          'handleRequest argument must be a function or map of intent names to functions'
       ));
     }
 
     if (handler.get(this.intent)) {
-      let result = handler.get(this.intent)(this);
+      const result = handler.get(this.intent)(this);
       // If handler is a promise use it, otherwise create use default (empty) promise
-      let promise = Promise.resolve(result);
+      const promise = Promise.resolve(result);
       return promise.then(() => this.send_());
     } else if (handler.get(null)) {
-      let result = handler.get(null)(this);
+      const result = handler.get(null)(this);
       // If handler is a promise use it, otherwise create use default (empty) promise
-      let promise = Promise.resolve(result);
+      const promise = Promise.resolve(result);
       return promise.then(() => this.send_());
     } else {
       error('No handler for requested intent');
       this.response_
-        .status(RESPONSE_CODE_BAD_REQUEST)
-        .status('No handler for requested intent');
+          .status(RESPONSE_CODE_BAD_REQUEST)
+          .status('No handler for requested intent');
       return Promise.reject(new Error('No handler for requested intent'));
     }
   }
@@ -514,7 +514,7 @@ class WebhookClient {
    */
   existingSuggestion_(platform) {
     let existingSuggestion;
-    for (let response of this.responseMessages_) {
+    for (const response of this.responseMessages_) {
       if (response instanceof Suggestion) {
         if (
           (!response.platform || response.platform === PLATFORMS.UNSPECIFIED) &&
@@ -541,7 +541,7 @@ class WebhookClient {
    */
   existingPayload_(platform) {
     let existingPayload;
-    for (let response of this.responseMessages_) {
+    for (const response of this.responseMessages_) {
       if (response instanceof Payload) {
         if (
           (!response.platform || response.platform === PLATFORMS.UNSPECIFIED) &&

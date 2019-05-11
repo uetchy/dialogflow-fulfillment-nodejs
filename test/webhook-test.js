@@ -26,39 +26,39 @@ const {Suggestion} = require('../src/dialogflow-fulfillment');
 
 test('Quick Replies Response test', async (t) => {
   // v1 simulator webhook request
-  let simulatorRequest = {body: mockSimulatorV1Request}; // mockV1SimulatorRequest
+  const simulatorRequest = {body: mockSimulatorV1Request}; // mockV1SimulatorRequest
   webhookSuggestionTest(simulatorRequest, (responseJson) => {
     t.deepEqual(
-      {
-        messages: [{type: 2, replies: ['Quick Reply', 'Suggestion']}],
-        contextOut: [],
-      },
-      responseJson
+        {
+          messages: [{type: 2, replies: ['Quick Reply', 'Suggestion']}],
+          contextOut: [],
+        },
+        responseJson
     );
   });
 
   // v2 facebook webhook request
-  let mockFacebookV2Request = {body: mockFacebookV2RequestWebhook}; // mockV1SimulatorRequest
+  const mockFacebookV2Request = {body: mockFacebookV2RequestWebhook}; // mockV1SimulatorRequest
   webhookSuggestionTest(mockFacebookV2Request, (responseJson) => {
     t.deepEqual(
-      {
-        fulfillmentMessages: [
-          {
-            quickReplies: {quickReplies: ['Quick Reply', 'Suggestion']},
-            platform: 'FACEBOOK',
-          },
-        ],
-        outputContexts: [],
-      },
-      responseJson
+        {
+          fulfillmentMessages: [
+            {
+              quickReplies: {quickReplies: ['Quick Reply', 'Suggestion']},
+              platform: 'FACEBOOK',
+            },
+          ],
+          outputContexts: [],
+        },
+        responseJson
     );
   });
 });
 
 test('Language Code test', async (t) => {
   // v1 simulator webhook request
-  let simulatorResponse = new ResponseMock();
-  let simulatorRequest = {body: mockSimulatorV1Request}; // mockV1SimulatorRequest
+  const simulatorResponse = new ResponseMock();
+  const simulatorRequest = {body: mockSimulatorV1Request}; // mockV1SimulatorRequest
   let agent = new WebhookClient({
     request: simulatorRequest,
     response: simulatorResponse,
@@ -66,8 +66,8 @@ test('Language Code test', async (t) => {
   t.deepEqual('en', agent.locale);
 
   // v2 facebook webhook request
-  let mockFacebookV2Response = new ResponseMock();
-  let mockFacebookV2Request = {body: mockFacebookV2RequestWebhook}; // mockV1SimulatorRequest
+  const mockFacebookV2Response = new ResponseMock();
+  const mockFacebookV2Request = {body: mockFacebookV2RequestWebhook}; // mockV1SimulatorRequest
   agent = new WebhookClient({
     request: mockFacebookV2Request,
     response: mockFacebookV2Response,
@@ -122,19 +122,19 @@ test('Actions on Google lib integration test', async (t) => {
 });
 
 test('500 response for missing messages', async (t) => {
-  let simulatorRequestV1 = {body: mockSimulatorV1Request};
+  const simulatorRequestV1 = {body: mockSimulatorV1Request};
   noResponsesTest(simulatorRequestV1, (responseJson) => {
     t.deepEqual(
-      'No responses defined for platform: null',
-      responseJson
+        'No responses defined for platform: null',
+        responseJson
     );
   });
 
-  let facebookV2Request = {body: mockFacebookV2RequestWebhook};
+  const facebookV2Request = {body: mockFacebookV2RequestWebhook};
   noResponsesTest(facebookV2Request, (responseJson) => {
     t.deepEqual(
-      'No responses defined for platform: FACEBOOK',
-      responseJson
+        'No responses defined for platform: FACEBOOK',
+        responseJson
     );
   });
 });
@@ -146,8 +146,8 @@ test('500 response for missing messages', async (t) => {
  */
 function noResponsesTest(request, callback) {
   // v1 simulator webhook request
-  let response = new ResponseMock(callback);
-  let agent = new WebhookClient({
+  const response = new ResponseMock(callback);
+  const agent = new WebhookClient({
     request: request,
     response: response,
   });
@@ -167,14 +167,14 @@ function noResponsesTest(request, callback) {
  */
 function actionsOnGoogleTest(request, callback) {
   // v1 simulator webhook request
-  let response = new ResponseMock(callback);
-  let agent = new WebhookClient({
+  const response = new ResponseMock(callback);
+  const agent = new WebhookClient({
     request: request,
     response: response,
   });
 
   agent.handleRequest( (agent) => {
-    let conv = agent.conv();
+    const conv = agent.conv();
     conv.ask('Hi');
     agent.add(conv);
   });
@@ -187,8 +187,8 @@ function actionsOnGoogleTest(request, callback) {
  */
 function webhookSuggestionTest(request, callback) {
   // v1 simulator webhook request
-  let response = new ResponseMock(callback);
-  let agent = new WebhookClient({
+  const response = new ResponseMock(callback);
+  const agent = new WebhookClient({
     request: request,
     response: response,
   });

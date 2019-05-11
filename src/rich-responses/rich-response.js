@@ -43,7 +43,7 @@ const SUPPORTED_RICH_MESSAGE_PLATFORMS = [
 ];
 
 // Map from v2 platform names to v1 platform names
-let V2_TO_V1_PLATFORM_NAME = {};
+const V2_TO_V1_PLATFORM_NAME = {};
 V2_TO_V1_PLATFORM_NAME[PLATFORMS.FACEBOOK] = 'facebook';
 V2_TO_V1_PLATFORM_NAME[PLATFORMS.SLACK] = 'slack';
 V2_TO_V1_PLATFORM_NAME[PLATFORMS.TELEGRAM] = 'telegram';

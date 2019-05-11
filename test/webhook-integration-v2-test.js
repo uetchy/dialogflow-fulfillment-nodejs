@@ -26,61 +26,61 @@ const {Card, Suggestion} = require('../src/dialogflow-fulfillment');
 
 test('v2 Integration test', async (t) => {
   // v2 Google welcome
-  let googleV2WelcomeRequest = {body: mockGoogleV2RequestWelcome};
+  const googleV2WelcomeRequest = {body: mockGoogleV2RequestWelcome};
   webhookTest(googleV2WelcomeRequest, (responseJson) => {
     t.deepEqual(responseJson, mockGoogleV2ResponseWelcome);
   });
 
   // v2 Slack welcome
-  let slackV2WelcomeRequest = {body: mockSlackV2RequestWelcome};
+  const slackV2WelcomeRequest = {body: mockSlackV2RequestWelcome};
   webhookTest(slackV2WelcomeRequest, (responseJson) => {
     t.deepEqual(responseJson, mockSlackV2ResponseWelcome);
   });
 
   // v2 Facebook welcome
-  let facebookV2WelcomeRequest = {body: mockFacebookV2RequestWelcome};
+  const facebookV2WelcomeRequest = {body: mockFacebookV2RequestWelcome};
   webhookTest(facebookV2WelcomeRequest, (responseJson) => {
     t.deepEqual(responseJson, mockFacebookV2ResponseWelcome);
   });
 
   // v2 Google fallback
-  let googleV2FallbackRequest = {body: mockGoogleV2RequestFallback};
+  const googleV2FallbackRequest = {body: mockGoogleV2RequestFallback};
   webhookTest(googleV2FallbackRequest, (responseJson) => {
     t.deepEqual(responseJson, mockGoogleV2ResponseFallback);
   });
 
   // v2 Slack fallback
-  let slackV2FallbackRequest = {body: mockSlackV2RequestFallback};
+  const slackV2FallbackRequest = {body: mockSlackV2RequestFallback};
   webhookTest(slackV2FallbackRequest, (responseJson) => {
     t.deepEqual(responseJson, mockSlackV2ResponseFallback);
   });
 
   // v2 Facebook fallback
-  let facebookV2FallbackRequest = {body: mockFacebookV2RequestFallback};
+  const facebookV2FallbackRequest = {body: mockFacebookV2RequestFallback};
   webhookTest(facebookV2FallbackRequest, (responseJson) => {
     t.deepEqual(responseJson, mockFacebookV2ResponseFallback);
   });
 
   // v2 Google webhook
-  let googleV2WebhookRequest = {body: mockGoogleV2RequestWebhook};
+  const googleV2WebhookRequest = {body: mockGoogleV2RequestWebhook};
   webhookTest(googleV2WebhookRequest, (responseJson) => {
     t.deepEqual(responseJson, mockGoogleV2ResponseWebhook);
   });
 
   // v2 Slack webhook
-  let slackV2WebhookRequest = {body: mockSlackV2RequestWebhook};
+  const slackV2WebhookRequest = {body: mockSlackV2RequestWebhook};
   webhookTest(slackV2WebhookRequest, (responseJson) => {
     t.deepEqual(responseJson, mockSlackV2ResponseWebhook);
   });
 
   // v2 Facebook webhook
-  let facebookV2WebhookRequest = {body: mockFacebookV2RequestWebhook};
+  const facebookV2WebhookRequest = {body: mockFacebookV2RequestWebhook};
   webhookTest(facebookV2WebhookRequest, (responseJson) => {
     t.deepEqual(responseJson, mockFacebookV2ResponseWebhook);
   });
 
   // v2 simulator webhook
-  let simulatorV2WebhookRequest = {body: mockSimulatorV2RequestOther};
+  const simulatorV2WebhookRequest = {body: mockSimulatorV2RequestOther};
   webhookTest(simulatorV2WebhookRequest, (responseJson) => {
     t.deepEqual(responseJson, mockSimulatorV2ResponseOther);
   });
@@ -92,7 +92,7 @@ test('v2 Integration test', async (t) => {
  * @param {function} callback
  */
 function webhookTest(request, callback) {
-  let response = new ResponseMock(callback);
+  const response = new ResponseMock(callback);
   const agent = new WebhookClient({request: request, response: response});
   /**
    * Handler function to welcome
@@ -121,18 +121,18 @@ function webhookTest(request, callback) {
       parameters: {city: 'Rome'},
     });
     agent.add(new Card({
-        title: 'Title: this is a card title',
-        text: 'This is the body text of a card.  You can even use line\nbreaks and emoji! 💁',
-        imageUrl: 'https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png',
-        buttonText: 'This is a button',
-        buttonUrl: 'https://assistant.google.com/',
-      })
+      title: 'Title: this is a card title',
+      text: 'This is the body text of a card.  You can even use line\nbreaks and emoji! 💁',
+      imageUrl: 'https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png',
+      buttonText: 'This is a button',
+      buttonUrl: 'https://assistant.google.com/',
+    })
     );
     agent.add(new Suggestion('Quick Reply'));
     agent.add(new Suggestion('Suggestion'));
   }
 
-  let actionMap = new Map();
+  const actionMap = new Map();
   actionMap.set('Default Welcome Intent', welcome);
   actionMap.set('Default Fallback Intent', fallback);
   actionMap.set(null, other);

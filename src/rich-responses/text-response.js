@@ -46,7 +46,7 @@ class Text extends RichResponse {
     super();
     if (text === undefined || (typeof text === 'object' && !text.text)) {
       throw new Error(
-        'string required by Text constructor'
+          'string required by Text constructor'
       );
     }
     if (typeof text === 'string') {

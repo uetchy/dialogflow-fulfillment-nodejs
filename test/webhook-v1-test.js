@@ -31,87 +31,87 @@ const linkUrl = 'https://assistant.google.com/';
 
 test('Test v1 AoG responses', async (t) => {
   // TextResponse and CardResponse
-  let googleRequest = {body: mockGoogleV1Request};
+  const googleRequest = {body: mockGoogleV1Request};
   webhookTest(googleRequest, textAndCard, (responseJson) => {
     t.deepEqual(responseJson, responseGoogleV1TextAndCard);
   });
 
   // ImageResponse
   webhookTest(
-    googleRequest,
-    function(agent) {
-      agent.add(new Image(imageUrl));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseGoogleV1Image);
-    }
+      googleRequest,
+      function(agent) {
+        agent.add(new Image(imageUrl));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseGoogleV1Image);
+      }
   );
 
   // QuickRepliesResponse
   webhookTest(
-    googleRequest,
-    (agent) => {
-      agent.add(new Suggestion('sample reply'));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseGoogleV1Suggestion);
-    }
+      googleRequest,
+      (agent) => {
+        agent.add(new Suggestion('sample reply'));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseGoogleV1Suggestion);
+      }
   );
 
   // PayloadResponse
   webhookTest(
-    googleRequest,
-    (agent) => {
-      agent.add(new Payload(agent.ACTIONS_ON_GOOGLE, googlePayload));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseGoogleV1Payload);
-    }
+      googleRequest,
+      (agent) => {
+        agent.add(new Payload(agent.ACTIONS_ON_GOOGLE, googlePayload));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseGoogleV1Payload);
+      }
   );
 });
 
 test('Test v1 Slack responses', async (t) => {
   // TextResponse and CardResponse
-  let slackRequest = {body: mockSlackV1Request};
+  const slackRequest = {body: mockSlackV1Request};
   webhookTest(
-    slackRequest,
-    textAndCard,
-    (responseJson) => {
-      t.deepEqual(responseJson, responseSlackV1TextAndCard);
-    }
+      slackRequest,
+      textAndCard,
+      (responseJson) => {
+        t.deepEqual(responseJson, responseSlackV1TextAndCard);
+      }
   );
 
   // ImageResponse
   webhookTest(
-    slackRequest,
-    (agent) => {
-      agent.add(new Image(imageUrl));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseSlackV1Image);
-    }
+      slackRequest,
+      (agent) => {
+        agent.add(new Image(imageUrl));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseSlackV1Image);
+      }
   );
 
   // SuggetionsResponse
   webhookTest(
-    slackRequest,
-    (agent) => {
-      agent.add( new Suggestion('sample reply'));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseSlackV1Suggestion);
-    }
+      slackRequest,
+      (agent) => {
+        agent.add( new Suggestion('sample reply'));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseSlackV1Suggestion);
+      }
   );
 
   // PayloadResponse
   webhookTest(
-    slackRequest,
-    (agent) => {
-      agent.add( new Payload(agent.SLACK, slackPayload));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseSlackV1Payload);
-    }
+      slackRequest,
+      (agent) => {
+        agent.add( new Payload(agent.SLACK, slackPayload));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseSlackV1Payload);
+      }
   );
 });
 
@@ -119,31 +119,31 @@ test('Test v1 Facebook responses', async (t) => {
   // QuickRepliesResponse
   const facebookRequest = {body: mockFacebookV1Request};
   webhookTest(
-    facebookRequest,
-    (agent) => {
-      agent.add( new Suggestion('sample reply'));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responsefacebookV1Suggestion);
-    }
+      facebookRequest,
+      (agent) => {
+        agent.add( new Suggestion('sample reply'));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responsefacebookV1Suggestion);
+      }
   );
 
   // PayloadResponse
   webhookTest(
-    facebookRequest,
-    (agent) => {
-      agent.add( new Payload(agent.FACEBOOK, facebookPayload));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, responseFacebookV1Payload);
-    }
+      facebookRequest,
+      (agent) => {
+        agent.add( new Payload(agent.FACEBOOK, facebookPayload));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, responseFacebookV1Payload);
+      }
   );
 });
 
 test('Test v1 Twitter requestSource', async (t) => {
-  let twitterRequest = {body: mockTwitterV1Request};
-  let response = new ResponseMock();
-  let agent = new WebhookClient({
+  const twitterRequest = {body: mockTwitterV1Request};
+  const response = new ResponseMock();
+  const agent = new WebhookClient({
     request: twitterRequest,
     response: response,
   });
@@ -152,31 +152,31 @@ test('Test v1 Twitter requestSource', async (t) => {
 });
 
 test('Test v1 Twitter text-only response', async (t) => {
-  let twitterRequest = {body: mockTwitterV1Request};
+  const twitterRequest = {body: mockTwitterV1Request};
   const textResponse = 'twitter text response';
 
   webhookTest(
-    twitterRequest,
-    (agent) => {
-      agent.add(textResponse);
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, {speech: textResponse, displayText: textResponse, contextOut: []});
-    }
+      twitterRequest,
+      (agent) => {
+        agent.add(textResponse);
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, {speech: textResponse, displayText: textResponse, contextOut: []});
+      }
   );
 });
 
 test('Test v1 Twitter payload response', async (t) => {
-  let twitterRequest = {body: mockTwitterV1Request};
+  const twitterRequest = {body: mockTwitterV1Request};
 
   webhookTest(
-    twitterRequest,
-    (agent) => {
-      agent.add(new Payload('twitter', {test: 'payload'}));
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson, {data: {twitter: {test: 'payload'}}, contextOut: []});
-    }
+      twitterRequest,
+      (agent) => {
+        agent.add(new Payload('twitter', {test: 'payload'}));
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson, {data: {twitter: {test: 'payload'}}, contextOut: []});
+      }
   );
 });
 
@@ -189,9 +189,9 @@ test('Test v1 contexts', async (t) => {
     parameters: {city: 'Rome'},
   };
 
-  let googleResponse = new ResponseMock();
-  let googleRequest = {body: mockGoogleV1Request};
-  let agent = new WebhookClient({
+  const googleResponse = new ResponseMock();
+  const googleRequest = {body: mockGoogleV1Request};
+  const agent = new WebhookClient({
     request: googleRequest,
     response: googleResponse,
   });
@@ -203,7 +203,7 @@ test('Test v1 contexts', async (t) => {
   agent.setContext(complexContext);
   t.deepEqual({name: complexContext.name,
     lifespan: 2, parameters: {city: 'Rome'}},
-    agent.context.get(complexContext.name)
+  agent.context.get(complexContext.name)
   );
   // clearContext
   agent.clearContext(sampleContextName);
@@ -215,9 +215,9 @@ test('Test v1 contexts', async (t) => {
 });
 
 test('Test v1 getContext', async (t) => {
-  let googleResponse = new ResponseMock();
-  let googleRequest = {body: mockGoogleV1Request};
-  let agent = new WebhookClient({
+  const googleResponse = new ResponseMock();
+  const googleRequest = {body: mockGoogleV1Request};
+  const agent = new WebhookClient({
     request: googleRequest,
     response: googleResponse,
   });
@@ -227,7 +227,7 @@ test('Test v1 getContext', async (t) => {
     parameters: {},
     lifespan: 0,
   },
-    context
+  context
   );
 
   context = agent.getContext('nonsense');
@@ -247,9 +247,9 @@ test('Test v1 followup events', async (t) => {
     data: {city: 'Rome'},
   };
 
-  let googleResponse = new ResponseMock();
-  let googleRequest = {body: mockGoogleV1Request};
-  let agent = new WebhookClient({
+  const googleResponse = new ResponseMock();
+  const googleRequest = {body: mockGoogleV1Request};
+  const agent = new WebhookClient({
     request: googleRequest,
     response: googleResponse,
   });
@@ -264,7 +264,7 @@ test('Test v1 followup events', async (t) => {
 
 test('Test v1 followupEvent only response', async (t) => {
   // Request with Knowledge connector response
-  let request = {body: mockGoogleV1Request};
+  const request = {body: mockGoogleV1Request};
   const complexEvent = {
     name: 'weather',
     parameters: {city: 'Rome'},
@@ -276,71 +276,71 @@ test('Test v1 followupEvent only response', async (t) => {
   };
 
   webhookTest(
-    request,
-    (agent) => {
-      agent.setFollowupEvent(complexEvent);
-    },
-    (responseJson) => {
-      t.deepEqual(responseJson.followupEvent, complexEventJson);
-    },
+      request,
+      (agent) => {
+        agent.setFollowupEvent(complexEvent);
+      },
+      (responseJson) => {
+        t.deepEqual(responseJson.followupEvent, complexEventJson);
+      },
   );
 });
 
 test('Test v1 original request', async (t) => {
-  let response = new ResponseMock();
+  const response = new ResponseMock();
 
 
-  let googleRequest = {body: mockGoogleV1Request};
+  const googleRequest = {body: mockGoogleV1Request};
   let agent = new WebhookClient({
     request: googleRequest,
     response: response,
   });
 
   // Rename 'data' attr to 'payload' to be consistent with v2
-  let mockGoogleV1RequestOrigReq = Object.assign({}, mockGoogleV1Request.originalRequest);
+  const mockGoogleV1RequestOrigReq = Object.assign({}, mockGoogleV1Request.originalRequest);
   Object.defineProperty(mockGoogleV1RequestOrigReq, 'payload',
-    Object.getOwnPropertyDescriptor(mockGoogleV1RequestOrigReq, 'data'));
+      Object.getOwnPropertyDescriptor(mockGoogleV1RequestOrigReq, 'data'));
   delete mockGoogleV1RequestOrigReq['data'];
 
   t.deepEqual(mockGoogleV1RequestOrigReq,
-    agent.originalRequest
+      agent.originalRequest
   );
 
-  let facebookRequest = {body: mockFacebookV1Request};
+  const facebookRequest = {body: mockFacebookV1Request};
   agent = new WebhookClient({
     request: facebookRequest,
     response: response,
   });
 
   // Rename 'data' attr to 'payload' to be consistent with v2
-  let mockFacebookV1RequestOrigReq = Object.assign({}, mockFacebookV1Request.originalRequest);
+  const mockFacebookV1RequestOrigReq = Object.assign({}, mockFacebookV1Request.originalRequest);
   Object.defineProperty(mockFacebookV1RequestOrigReq, 'payload',
-    Object.getOwnPropertyDescriptor(mockFacebookV1RequestOrigReq, 'data'));
+      Object.getOwnPropertyDescriptor(mockFacebookV1RequestOrigReq, 'data'));
   delete mockFacebookV1RequestOrigReq['data'];
 
 
   t.deepEqual(mockFacebookV1RequestOrigReq,
-    agent.originalRequest
+      agent.originalRequest
   );
 });
 
 test('Test v1 no handler defined', async (t) => {
-  let response = new ResponseMock();
-  let agent = new WebhookClient({
+  const response = new ResponseMock();
+  const agent = new WebhookClient({
     request: {body: mockSlackV1Request},
     response: response,
   });
 
   const noHandlerDefinedError = await t.throws(agent.handleRequest(new Map()));
   t.is(
-    noHandlerDefinedError.message,
-    'No handler for requested intent'
+      noHandlerDefinedError.message,
+      'No handler for requested intent'
   );
 });
 
 test('Test v2 end conversation', async (t) => {
-  let response = new ResponseMock();
-  let agent = new WebhookClient({
+  const response = new ResponseMock();
+  const agent = new WebhookClient({
     request: {body: mockSlackV1Request},
     response: response,
   });
@@ -350,8 +350,8 @@ test('Test v2 end conversation', async (t) => {
   });
 
   t.is(
-    noHandlerDefinedError.message,
-    '"end" method is not supported on Dialogflow API V1.  Please migrate to Dialogflow API V2.'
+      noHandlerDefinedError.message,
+      '"end" method is not supported on Dialogflow API V1.  Please migrate to Dialogflow API V2.'
   );
 });
 
@@ -362,8 +362,8 @@ test('Test v2 end conversation', async (t) => {
  * @param {function} callback for after response is complied
  */
 function webhookTest(request, handler, callback) {
-  let response = new ResponseMock(callback);
-  let agent = new WebhookClient({
+  const response = new ResponseMock(callback);
+  const agent = new WebhookClient({
     request: request,
     response: response,
   });
@@ -371,8 +371,8 @@ function webhookTest(request, handler, callback) {
 }
 
 test('Test v1 getResponseMessages', async (t) => {
-  let response = new ResponseMock();
-  let agent = new WebhookClient({
+  const response = new ResponseMock();
+  const agent = new WebhookClient({
     request: {body: mockV1MultipleConsoleMessagesRequest},
     response: response,
   });
@@ -397,7 +397,7 @@ test('Test v1 getResponseMessages', async (t) => {
   const facebookImage = consoleMessages[3];
   t.true(facebookImage instanceof Image);
   t.is(facebookImage.imageUrl,
-    'https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png'
+      'https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png'
   );
   // Facebook payload
   const facebookPayload = consoleMessages[4];
@@ -438,12 +438,12 @@ test('Test v1 getResponseMessages', async (t) => {
 function textAndCard(agent) {
   agent.add('text response');
   agent.add(new Card({
-      title: 'card title',
-      text: 'card text',
-      imageUrl: imageUrl,
-      buttonText: 'button text',
-      buttonUrl: linkUrl,
-    })
+    title: 'card title',
+    text: 'card text',
+    imageUrl: imageUrl,
+    buttonText: 'button text',
+    buttonUrl: linkUrl,
+  })
   );
 };
 
@@ -635,25 +635,25 @@ const responseGoogleV1Suggestion = {
 };
 
 const responseGoogleV1Image = {
-    messages: [
-      {
-        type: 'simple_response',
-        platform: 'google',
-        textToSpeech: ' ',
-        displayText: ' ',
-      },
-      {
-        type: 'basic_card',
-        platform: 'google',
-        image: {
-          url:
+  messages: [
+    {
+      type: 'simple_response',
+      platform: 'google',
+      textToSpeech: ' ',
+      displayText: ' ',
+    },
+    {
+      type: 'basic_card',
+      platform: 'google',
+      image: {
+        url:
             'https://assistant.google.com/static/images/molecule/Molecule-Formation-stop.png',
-          accessibilityText: 'accessibility text',
-        },
+        accessibilityText: 'accessibility text',
       },
-    ],
-    contextOut: [],
-  };
+    },
+  ],
+  contextOut: [],
+};
 
 const responseGoogleV1TextAndCard = {
   messages: [

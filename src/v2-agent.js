@@ -97,7 +97,7 @@ class V2Agent {
      */
     if (this.agent.request_.body.queryResult.outputContexts) {
       this.agent.contexts = this.agent.request_.body.queryResult.outputContexts.map(
-        (context) => this.convertV2ContextToV1Context_(context));
+          (context) => this.convertV2ContextToV1Context_(context));
     } else {
       this.agent.contexts = [];
     }
@@ -109,8 +109,8 @@ class V2Agent {
      * @type {Contexts}
      */
     this.agent.context = new Contexts(
-      this.agent.request_.body.queryResult.outputContexts,
-      this.agent.session);
+        this.agent.request_.body.queryResult.outputContexts,
+        this.agent.session);
 
     /**
      * Dialogflow source included in the request or null if no value
@@ -149,8 +149,8 @@ class V2Agent {
      * Original request language code (i.e. "en")
      * @type {string} locale language code indicating the spoken/written language of the original request
      */
-     this.agent.locale = this.agent.request_.body.queryResult.languageCode;
-     debug(`Request locale: ${JSON.stringify(this.agent.locale)}`);
+    this.agent.locale = this.agent.request_.body.queryResult.languageCode;
+    debug(`Request locale: ${JSON.stringify(this.agent.locale)}`);
 
     /**
      * List of messages defined in Dialogflow's console for the matched intent
@@ -212,7 +212,7 @@ class V2Agent {
    * @private
    */
   addMessagesResponse_(requestSource) {
-    let messages = this.buildResponseMessages_(requestSource);
+    const messages = this.buildResponseMessages_(requestSource);
     if (messages.length > 0) {
       this.addJson_({fulfillmentMessages: messages});
     }
@@ -268,7 +268,7 @@ class V2Agent {
    */
   buildResponseMessages_(requestSource) {
     return this.agent.responseMessages_.map((message) => message.getV2ResponseObject_(requestSource)).
-      filter((arr) => arr);
+        filter((arr) => arr);
   }
 
   /**
@@ -293,7 +293,7 @@ class V2Agent {
    * @private
    */
   convertV2ContextToV1Context_(v2Context) {
-    let v1Context = {};
+    const v1Context = {};
     const v2ContextNamePrefixLength = this.agent.session.length + '/contexts/'.length;
     v1Context.name = v2Context.name.slice(v2ContextNamePrefixLength);
     v1Context.lifespan = v2Context.lifespanCount;
@@ -340,8 +340,8 @@ class V2Agent {
     }
 
     this.agent.add(new PayloadResponse(
-      PLATFORMS.ACTIONS_ON_GOOGLE,
-      response.payload.google)
+        PLATFORMS.ACTIONS_ON_GOOGLE,
+        response.payload.google)
     );
   }
 
@@ -373,7 +373,7 @@ class V2Agent {
       if (richResponseMapping[richMessageType]) {
         const messagePlatform = consoleMessageJson.platform ? consoleMessageJson.platform : undefined;
         // convert the JSON to fufillment classes
-        let richResponse = richResponseMapping[richMessageType](consoleMessageJson, messagePlatform);
+        const richResponse = richResponseMapping[richMessageType](consoleMessageJson, messagePlatform);
         richResponse ? richConsoleMessages = richConsoleMessages.concat(richResponse) : null;
       } else {
         debug(`Unsupported console message type "${richMessageType}"`);
@@ -457,7 +457,7 @@ class V2Agent {
    */
   convertQuickRepliesJson_(messageJson, platform) {
     if (!messageJson.suggestions) return null;
-    let suggestions = [];
+    const suggestions = [];
     messageJson.suggestions.forEach((consoleMessageJson, iterator) => {
       suggestions.push(new Suggestion({
         title: messageJson.quickReplies.quickReplies[iterator],
@@ -513,7 +513,7 @@ class V2Agent {
    */
   convertSuggestionsJson_(messageJson, platform) {
     if (!messageJson.suggestions) return null;
-    let suggestions = [];
+    const suggestions = [];
     messageJson.suggestions.suggestions.forEach((consoleMessageJson, iterator) => {
       suggestions.push(new Suggestion({
         title: messageJson.suggestions.suggestions[iterator].title,

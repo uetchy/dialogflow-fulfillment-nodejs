@@ -34,7 +34,7 @@ const {
 
 test('Test v1 and v2 generic responses', async (t) => {
   // TextResponse generic response
-  let textResponse = new TextResponse('sample text');
+  const textResponse = new TextResponse('sample text');
   t.deepEqual(textResponse.getV1ResponseObject_(), {
     type: 0,
     speech: 'sample text',
@@ -44,7 +44,7 @@ test('Test v1 and v2 generic responses', async (t) => {
   });
 
   // CardResponse generic response
-  let cardResponse = new CardResponse('sample title');
+  const cardResponse = new CardResponse('sample title');
   t.deepEqual(cardResponse.getV1ResponseObject_(), {
     type: 1,
     title: 'sample title',
@@ -60,8 +60,8 @@ test('Test creation of without required args/params', (t) => {
     new TextResponse();
   }, Error);
   t.is(
-    textNoArgsError.message,
-    'string required by Text constructor'
+      textNoArgsError.message,
+      'string required by Text constructor'
   );
 
   // text response with object with no text attr
@@ -69,8 +69,8 @@ test('Test creation of without required args/params', (t) => {
     new TextResponse({platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[7]});
   }, Error);
   t.is(
-    textNoAttrError.message,
-    'string required by Text constructor'
+      textNoAttrError.message,
+      'string required by Text constructor'
   );
 
   // card response with no args in constructor
@@ -78,8 +78,8 @@ test('Test creation of without required args/params', (t) => {
     new CardResponse();
   }, Error);
   t.is(
-    cardNoArgsError.message,
-    'title string required by Card constructor'
+      cardNoArgsError.message,
+      'title string required by Card constructor'
   );
 
   // card response with object with no title attr
@@ -87,52 +87,52 @@ test('Test creation of without required args/params', (t) => {
     new CardResponse({platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[7]});
   }, Error);
   t.is(
-    cardNoAttrError.message,
-    'title string required by Card constructor'
+      cardNoAttrError.message,
+      'title string required by Card constructor'
   );
 });
 
 test('Test v1 and v2 platform responses', async (t) => {
   // Text v1 and v2 response messages for AoG, non-AoG and unspecified platform
-  let textResponse = new TextResponse('sample text');
+  const textResponse = new TextResponse('sample text');
   t.deepEqual(
-    textResponse.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
-    {
-      displayText: 'sample text',
-      textToSpeech: 'sample text',
-      type: 'simple_response',
-      platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[7]],
-    }
+      textResponse.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
+      {
+        displayText: 'sample text',
+        textToSpeech: 'sample text',
+        type: 'simple_response',
+        platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[7]],
+      }
   );
   t.deepEqual(
-    textResponse.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
-    {
-      type: 0,
-      speech: 'sample text',
-      platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[6]],
-    }
+      textResponse.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
+      {
+        type: 0,
+        speech: 'sample text',
+        platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[6]],
+      }
   );
   t.deepEqual(textResponse.getV1ResponseObject_(PLATFORMS.UNSPECIFIED), {
     type: 0,
     speech: 'sample text',
   });
   t.deepEqual(
-    textResponse.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
-    {
-      platform: 'ACTIONS_ON_GOOGLE',
-      simpleResponses: {
-        simpleResponses: [
-          {textToSpeech: 'sample text', displayText: 'sample text'},
-        ],
-      },
-    }
+      textResponse.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
+      {
+        platform: 'ACTIONS_ON_GOOGLE',
+        simpleResponses: {
+          simpleResponses: [
+            {textToSpeech: 'sample text', displayText: 'sample text'},
+          ],
+        },
+      }
   );
   t.deepEqual(
-    textResponse.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[2]),
-    {
-      text: {text: ['sample text']},
-      platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[2],
-    }
+      textResponse.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[2]),
+      {
+        text: {text: ['sample text']},
+        platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[2],
+      }
   );
   t.deepEqual(textResponse.getV2ResponseObject_(PLATFORMS.UNSPECIFIED), {
     text: {text: ['sample text']},
@@ -142,39 +142,39 @@ test('Test v1 and v2 platform responses', async (t) => {
   const cardTitle = 'sample title';
   const cardResponse = new CardResponse(cardTitle);
   t.deepEqual(
-    cardResponse.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
-    {
-      type: 'basic_card',
-      platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[7]],
-      title: cardTitle,
-      formattedText: ' ',
-    }
+      cardResponse.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
+      {
+        type: 'basic_card',
+        platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[7]],
+        title: cardTitle,
+        formattedText: ' ',
+      }
   );
   t.deepEqual(
-    cardResponse.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
-    {
-      type: 1,
-      platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[6]],
-      title: cardTitle,
-    }
+      cardResponse.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
+      {
+        type: 1,
+        platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[6]],
+        title: cardTitle,
+      }
   );
   t.deepEqual(cardResponse.getV1ResponseObject_(PLATFORMS.UNSPECIFIED), {
     type: 1,
     title: cardTitle,
   });
   t.deepEqual(
-    cardResponse.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
-    {
-      platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[7],
-      basicCard: {title: cardTitle},
-    }
+      cardResponse.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
+      {
+        platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[7],
+        basicCard: {title: cardTitle},
+      }
   );
   t.deepEqual(
-    cardResponse.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[2]),
-    {
-      card: {title: cardTitle},
-      platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[2],
-    }
+      cardResponse.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[2]),
+      {
+        card: {title: cardTitle},
+        platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[2],
+      }
   );
   t.deepEqual(cardResponse.getV2ResponseObject_(PLATFORMS.UNSPECIFIED), {
     card: {title: cardTitle},
@@ -183,107 +183,107 @@ test('Test v1 and v2 platform responses', async (t) => {
 
 test('Test v1 and v2 platform specific responses', async (t) => {
   // Text AoG text response
-  let textResponseAoG = new TextResponse({
+  const textResponseAoG = new TextResponse({
     platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[7],
     text: 'sample text',
   });
   t.deepEqual(
-    textResponseAoG.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
-    {
-      textToSpeech: 'sample text',
-      displayText: 'sample text',
-      type: 'simple_response',
-      platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[7]],
-    }
+      textResponseAoG.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
+      {
+        textToSpeech: 'sample text',
+        displayText: 'sample text',
+        type: 'simple_response',
+        platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[7]],
+      }
   );
   t.deepEqual(
-    textResponseAoG.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
-    {
-      platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[7],
-      simpleResponses: {
-        simpleResponses: [
-          {textToSpeech: 'sample text', displayText: 'sample text'},
-        ],
-      },
-    }
+      textResponseAoG.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
+      {
+        platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[7],
+        simpleResponses: {
+          simpleResponses: [
+            {textToSpeech: 'sample text', displayText: 'sample text'},
+          ],
+        },
+      }
   );
   t.deepEqual(
-    textResponseAoG.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
-    null
+      textResponseAoG.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
+      null
   );
 
   // Text non-AoG text response
-  let textResponseOther = new TextResponse({
+  const textResponseOther = new TextResponse({
     platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[6],
     text: 'sample text',
   });
   t.deepEqual(
-    textResponseOther.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
-    {
-      type: 0,
-      speech: 'sample text',
-      platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[6]],
-    }
+      textResponseOther.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
+      {
+        type: 0,
+        speech: 'sample text',
+        platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[6]],
+      }
   );
   t.deepEqual(
-    textResponseOther.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
-    {
-      text: {text: ['sample text']},
-      platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[6],
-    }
+      textResponseOther.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
+      {
+        text: {text: ['sample text']},
+        platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[6],
+      }
   );
   t.deepEqual(
-    textResponseOther.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
-    null
+      textResponseOther.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
+      null
   );
 
   // Card AoG text response
   const title = 'sample title';
-  let cardResponseAoG = new CardResponse({
+  const cardResponseAoG = new CardResponse({
     platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[7],
     title: title,
   });
   t.deepEqual(
-    cardResponseAoG.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
-    {
-      formattedText: ' ',
-      platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[7]],
-      title: title,
-      type: 'basic_card',
-    }
+      cardResponseAoG.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
+      {
+        formattedText: ' ',
+        platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[7]],
+        title: title,
+        type: 'basic_card',
+      }
   );
   t.deepEqual(
-    cardResponseAoG.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
-    {
-      basicCard: {title: title},
-      platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[7],
-    }
+      cardResponseAoG.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
+      {
+        basicCard: {title: title},
+        platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[7],
+      }
   );
   t.deepEqual(
-    cardResponseAoG.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
-    null
+      cardResponseAoG.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
+      null
   );
 
   // Card non-AoG text response
-  let cardResponseOther = new CardResponse({
+  const cardResponseOther = new CardResponse({
     platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[6],
     title: title,
   });
   t.deepEqual(
-    cardResponseOther.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
-    {
-      type: 1,
-      title: title,
-      platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[6]],
-    }
+      cardResponseOther.getV1ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
+      {
+        type: 1,
+        title: title,
+        platform: V2_TO_V1_PLATFORM_NAME[SUPPORTED_RICH_MESSAGE_PLATFORMS[6]],
+      }
   );
   t.deepEqual(
-    cardResponseOther.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
-    {card: {title: title}, platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[6]}
+      cardResponseOther.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[6]),
+      {card: {title: title}, platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[6]}
   );
   t.deepEqual(
-    cardResponseOther.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
-    null
+      cardResponseOther.getV2ResponseObject_(SUPPORTED_RICH_MESSAGE_PLATFORMS[7]),
+      null
   );
 });
 
@@ -292,7 +292,7 @@ test('Card specific features (title, text, image and button)', async (t) => {
 Molecule-Formation-stop.png`;
   const linkUrl = 'https://assistant.google.com/';
 
-  let card = new CardResponse('sample title');
+  const card = new CardResponse('sample title');
   // setTitle test
   card.setTitle('card title');
   t.deepEqual({type: 1, title: 'card title'}, card.getV1ResponseObject_());
@@ -300,64 +300,64 @@ Molecule-Formation-stop.png`;
   // setText test
   card.setText('card text');
   t.deepEqual(
-    {type: 1, title: 'card title', subtitle: 'card text'},
-    card.getV1ResponseObject_()
+      {type: 1, title: 'card title', subtitle: 'card text'},
+      card.getV1ResponseObject_()
   );
   t.deepEqual(
-    {card: {title: 'card title', subtitle: 'card text'}},
-    card.getV2ResponseObject_()
+      {card: {title: 'card title', subtitle: 'card text'}},
+      card.getV2ResponseObject_()
   );
   // setImage test
   card.setImage(imageUrl);
   t.deepEqual(
-    {
-      type: 1,
-      title: 'card title',
-      subtitle: 'card text',
-      imageUrl: `https://assistant.google.com/static/images/molecule/\
-Molecule-Formation-stop.png`,
-    },
-    card.getV1ResponseObject_()
-  );
-  t.deepEqual(
-    {
-      card: {
+      {
+        type: 1,
         title: 'card title',
         subtitle: 'card text',
-        imageUri: `https://assistant.google.com/static/images/molecule/\
+        imageUrl: `https://assistant.google.com/static/images/molecule/\
 Molecule-Formation-stop.png`,
       },
-    },
-    card.getV2ResponseObject_()
+      card.getV1ResponseObject_()
+  );
+  t.deepEqual(
+      {
+        card: {
+          title: 'card title',
+          subtitle: 'card text',
+          imageUri: `https://assistant.google.com/static/images/molecule/\
+Molecule-Formation-stop.png`,
+        },
+      },
+      card.getV2ResponseObject_()
   );
   // setButton test
   card.setButton({url: linkUrl, text: 'button text'});
   t.deepEqual(
-    {
-      type: 1,
-      title: 'card title',
-      subtitle: 'card text',
-      imageUrl: `https://assistant.google.com/static/images/molecule/\
-Molecule-Formation-stop.png`,
-      buttons: [
-        {text: 'button text', postback: 'https://assistant.google.com/'},
-      ],
-    },
-    card.getV1ResponseObject_()
-  );
-  t.deepEqual(
-    {
-      card: {
+      {
+        type: 1,
         title: 'card title',
         subtitle: 'card text',
-        imageUri: `https://assistant.google.com/static/images/molecule/\
+        imageUrl: `https://assistant.google.com/static/images/molecule/\
 Molecule-Formation-stop.png`,
         buttons: [
           {text: 'button text', postback: 'https://assistant.google.com/'},
         ],
       },
-    },
-    card.getV2ResponseObject_()
+      card.getV1ResponseObject_()
+  );
+  t.deepEqual(
+      {
+        card: {
+          title: 'card title',
+          subtitle: 'card text',
+          imageUri: `https://assistant.google.com/static/images/molecule/\
+Molecule-Formation-stop.png`,
+          buttons: [
+            {text: 'button text', postback: 'https://assistant.google.com/'},
+          ],
+        },
+      },
+      card.getV2ResponseObject_()
   );
 });
 
@@ -370,8 +370,8 @@ Molecule-Formation-stop.png`;
     new ImageResponse();
   }, Error);
   t.is(
-    cardNoAttrError.message,
-    'image url string required by Image constructor'
+      cardNoAttrError.message,
+      'image url string required by Image constructor'
   );
 
   // ImageResponse no imageUrl in constructor args should throw error attr
@@ -379,11 +379,11 @@ Molecule-Formation-stop.png`;
     new ImageResponse({platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[7]});
   }, Error);
   t.is(
-    cardNoUrlError.message,
-    'image url string required by Image constructor'
+      cardNoUrlError.message,
+      'image url string required by Image constructor'
   );
 
-  let image = new ImageResponse('https://google.com');
+  const image = new ImageResponse('https://google.com');
   // setImage test
   image.setImage(imageUrl);
   t.deepEqual({type: 3, imageUrl: imageUrl}, image.getV1ResponseObject_());
@@ -391,16 +391,16 @@ Molecule-Formation-stop.png`;
 });
 
 test('PayloadResponse', async (t) => {
-  let payload = {key: 'value'};
+  const payload = {key: 'value'};
 
   // Default don't include payload in messages
-  let payloadOnly = new PayloadResponse('ACTIONS_ON_GOOGLE', payload);
+  const payloadOnly = new PayloadResponse('ACTIONS_ON_GOOGLE', payload);
   t.deepEqual(null, payloadOnly.getV1ResponseObject_());
   t.deepEqual(null, payloadOnly.getV2ResponseObject_());
 
 
   // Default nest payload under platform name
-  let payloadMessage = new PayloadResponse('ACTIONS_ON_GOOGLE', payload, {
+  const payloadMessage = new PayloadResponse('ACTIONS_ON_GOOGLE', payload, {
     sendAsMessage: true,
   });
   t.deepEqual(
@@ -411,7 +411,7 @@ test('PayloadResponse', async (t) => {
       payloadMessage.getV2ResponseObject_());
 
   // All non-default payload options
-  let rawPayloadMessage = new PayloadResponse('custom', payload, {
+  const rawPayloadMessage = new PayloadResponse('custom', payload, {
     sendAsMessage: true,
     rawPayload: true,
   });
@@ -431,8 +431,8 @@ test('QuickReplies (setReply and setPlatform)', async (t) => {
     new SuggestionsResponse();
   }, Error);
   t.is(
-    replyNoAttrError.message,
-    'Reply string required by Suggestion constructor'
+      replyNoAttrError.message,
+      'Reply string required by Suggestion constructor'
   );
 
   // SuggestionsResponse no reply in constructor args should throw error attr
@@ -440,23 +440,23 @@ test('QuickReplies (setReply and setPlatform)', async (t) => {
     new SuggestionsResponse({platform: SUPPORTED_RICH_MESSAGE_PLATFORMS[7]});
   }, Error);
   t.is(
-    replyNoUrlError.message,
-    'Reply string required by Suggestion constructor'
+      replyNoUrlError.message,
+      'Reply string required by Suggestion constructor'
   );
 
-  let quickReply = new SuggestionsResponse('quick reply');
+  const quickReply = new SuggestionsResponse('quick reply');
   // setImage test
   quickReply.setReply(reply);
   t.deepEqual({type: 2, replies: [reply]}, quickReply.getV1ResponseObject_());
   t.deepEqual(
-    {quickReplies: {quickReplies: [reply]}},
-    quickReply.getV2ResponseObject_()
+      {quickReplies: {quickReplies: [reply]}},
+      quickReply.getV2ResponseObject_()
   );
 });
 
 test('TextResponse SSML', async (t) => {
   // TextResponse generic response
-  let textResponse = new TextResponse({
+  const textResponse = new TextResponse({
     text: 'sample text',
     ssml: '<speak>This is <say-as interpret-as="characters">SSML</say-as>.</speak>',
   });

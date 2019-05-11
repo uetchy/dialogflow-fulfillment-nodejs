@@ -75,9 +75,9 @@ test('Test set method', async (t) => {
   t.deepEqual(context.contexts['context name'], contextObject1);
   context.set('another context name', 99, {parameter: 'value'});
   context.set(
-    'yet another context name',
-    4,
-    {parameter: 'value', anotherParam: 'another value', yetAnotherParam: 'yet another value'}
+      'yet another context name',
+      4,
+      {parameter: 'value', anotherParam: 'another value', yetAnotherParam: 'yet another value'}
   );
   t.deepEqual(context.contexts, contextObjects);
 
@@ -113,13 +113,13 @@ test('Test set method', async (t) => {
 });
 
 test('Test error for set method required argument', async (t) => {
-  let context = new Context();
+  const context = new Context();
   const noNameDefinedError = t.throws(() => {
-   context.set();
+    context.set();
   });
   t.is(
-    noNameDefinedError.message,
-    'Required "name" argument must be a string or an object with a string attribute "name"'
+      noNameDefinedError.message,
+      'Required "name" argument must be a string or an object with a string attribute "name"'
   );
 });
 
@@ -138,9 +138,9 @@ test('Test get method', async (t) => {
   // Get contexts set with set (method parameters)
   context = new Context();
   context.set(
-    'yet another context name',
-    4,
-    {parameter: 'value', anotherParam: 'another value', yetAnotherParam: 'yet another value'}
+      'yet another context name',
+      4,
+      {parameter: 'value', anotherParam: 'another value', yetAnotherParam: 'yet another value'}
   );
   t.deepEqual(context.get('yet another context name'), contextObject3);
 });
@@ -166,7 +166,7 @@ test('Test delete method', async (t) => {
 });
 
 test('Test context iterator', async (t) => {
-  let context = new Context(v2IncomingContexts, v2Session);
+  const context = new Context(v2IncomingContexts, v2Session);
   let i = 0;
   for (const ctx of context) {
     t.deepEqual(ctx, [contextObject1, contextObject2, contextObject3][i]);
@@ -175,7 +175,7 @@ test('Test context iterator', async (t) => {
 });
 
 test('Test _removeOutgoingContext method', async (t) => {
-  let context = new Context(v2IncomingContexts, v2Session);
+  const context = new Context(v2IncomingContexts, v2Session);
   context._removeOutgoingContext('another context name');
   t.deepEqual(context.contexts, {'context name': contextObject1, 'yet another context name': contextObject3});
 });
@@ -198,7 +198,7 @@ let contextObject2 = {
   lifespan: 99,
 };
 
-let contextObject3 = {
+const contextObject3 = {
   name: 'yet another context name',
   parameters: {
     parameter: 'value',

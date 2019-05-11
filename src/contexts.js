@@ -137,7 +137,7 @@ class Context {
    * @public
    */
   [Symbol.iterator]() {
-    let contextArray = [];
+    const contextArray = [];
     for (const contextName of Object.keys(this.contexts)) {
       contextArray.push(this.contexts[contextName]);
     }
@@ -176,7 +176,7 @@ class Context {
    * @private
    */
   _processV1InputContexts(v1InputContexts) {
-    let contexts = {};
+    const contexts = {};
     for (let index = 0; index<v1InputContexts.length; index++) {
       const context = v1InputContexts[index];
       contexts[context['name']] = {
@@ -196,9 +196,9 @@ class Context {
    * @private
    */
   _processV2InputContexts(v2InputContexts) {
-    let contexts = {};
+    const contexts = {};
     for (let index = 0; index<v2InputContexts.length; index++) {
-      let context = v2InputContexts[index];
+      const context = v2InputContexts[index];
       const name = context['name'].split('/')[6];
       contexts[name] = {
         name: name,
@@ -213,7 +213,7 @@ class Context {
    * @return {Object[]} array of v1 context objects for webhook response
    */
   getV1OutputContextsArray() {
-    let v1OutputContexts = [];
+    const v1OutputContexts = [];
     for (const ctx of this) {
       // Skip context if it is the same as the input context
       if (this.inputContexts &&
@@ -221,7 +221,7 @@ class Context {
         _.isEqual(ctx, this.inputContexts[ctx.name])) {
         continue;
       }
-      let v1Context = {name: ctx.name};
+      const v1Context = {name: ctx.name};
       if (ctx.lifespan !== undefined) {
         v1Context['lifespan'] = ctx.lifespan;
       }
@@ -238,7 +238,7 @@ class Context {
    * @return {Object[]} array of v2 context objects for webhook response
    */
   getV2OutputContextsArray() {
-    let v2OutputContexts = [];
+    const v2OutputContexts = [];
     for (const ctx of this) {
       // Skip context if it is the same as the input context
       if (this.inputContexts &&
@@ -246,7 +246,7 @@ class Context {
         _.isEqual(ctx, this.inputContexts[ctx.name])) {
         continue;
       }
-      let v2Context = {name: `${this.session}/contexts/${ctx.name}`};
+      const v2Context = {name: `${this.session}/contexts/${ctx.name}`};
       if (ctx.lifespan !== undefined) {
         v2Context['lifespanCount'] = ctx.lifespan;
       }
