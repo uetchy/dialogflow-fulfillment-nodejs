@@ -8,9 +8,6 @@
     "docs": "node ./generateDocs.js",
     "lint": "eslint --fix \"src/**/*.js\" \"test/*.js\"",
     "test": "npm run lint && ava",
-  "engines": {
-    "node": ">=6.0.0"
-  },
     "test:ci": "npm i actions-on-google@^2.5.0 && ava",
     "zip": "npm run zip:actions-on-google && npm run zip:multilocale && npm run zip:temperature-converter && npm run zip:quick-start",
     "zip:actions-on-google": "node ./script/generateZip.js --indexjs ./samples/actions-on-google/functions/index.js --packagejson ./samples/actions-on-google/functions/package.json --agentzip ./samples/actions-on-google/actions-on-google-agent.zip",
